@@ -5,6 +5,7 @@ import Intro from './sections/Intro/Intro.jsx';
 import About from './sections/About.jsx';
 import Sets from './sections/Sets.jsx';
 import Gallery from './sections/Gallery.jsx';
+import Contact from './sections/Contact.jsx';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <About />
         <Sets />
         <Gallery />
+        <Contact />
       </main>
     </LenisProvider>
   );
