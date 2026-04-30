@@ -4,6 +4,7 @@ import Cursor from './components/Cursor.jsx';
 import Intro from './sections/Intro/Intro.jsx';
 import About from './sections/About.jsx';
 import Sets from './sections/Sets.jsx';
+import Gallery from './sections/Gallery.jsx';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Intro />
         <About />
         <Sets />
+        <Gallery />
       </main>
     </LenisProvider>
   );
