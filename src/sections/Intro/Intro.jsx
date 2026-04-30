@@ -4,7 +4,7 @@ import { useLenis } from '../../lib/lenis.jsx';
 import { setIntroReady } from '../../lib/useIntroGate.js';
 import Counter from './Counter.jsx';
 import DiagonalMarquees from './DiagonalMarquees.jsx';
-import LogoStroke from './LogoStroke.jsx';
+import LogoMark from './LogoMark.jsx';
 
 export default function Intro() {
   const [phase, setPhase] = useState('counting');
@@ -60,8 +60,13 @@ export default function Intro() {
   }, [phase]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <DiagonalMarquees blur={phase === 'reveal' || phase === 'done' ? 0 : 4} />
+    <section className="relative h-screen w-full overflow-hidden bg-bg">
+      <div
+        className="absolute inset-0 transition-opacity duration-700"
+        style={{ opacity: phase === 'counting' ? 1 : 0.18 }}
+      >
+        <DiagonalMarquees blur={phase === 'counting' ? 4 : 8} />
+      </div>
 
       <div className="relative z-10 grid h-full place-items-center">
         {phase === 'counting' && (
@@ -71,13 +76,13 @@ export default function Intro() {
         )}
 
         {(phase === 'reveal' || phase === 'done') && (
-          <div className="flex flex-col items-center gap-6 text-center">
-            <LogoStroke play onDone={phase === 'reveal' ? onLogoDone : undefined} />
-            <div ref={taglineRef} className="font-body text-fg/80 tracking-[0.3em] text-xs sm:text-sm uppercase">
+          <div className="flex flex-col items-center gap-12 text-center">
+            <LogoMark play onDone={phase === 'reveal' ? onLogoDone : undefined} />
+            <div ref={taglineRef} className="font-body text-fg/70 tracking-[0.5em] text-xs sm:text-sm uppercase">
               Más que música · Una experiencia
             </div>
             {phase === 'done' && (
-              <div ref={hintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cyan font-body text-xs tracking-[0.4em]">
+              <div ref={hintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 text-fg/60 font-body text-xs tracking-[0.4em]">
                 SCROLL ↓
               </div>
             )}

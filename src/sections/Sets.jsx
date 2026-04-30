@@ -27,12 +27,14 @@ export default function Sets() {
       data-cursor="glitch"
       className="relative px-6 sm:px-12 py-32"
     >
+      <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-magenta/15 blur-[120px]" />
       <SectionHeader index="02" label="SETS" />
-      <div>
-        {sets.map((s) => (
+      <div className="relative">
+        {sets.map((s, i) => (
           <SetRow
             key={s.id}
             set={s}
+            index={i}
             expanded={openId === s.id}
             onToggle={() => setOpenId((id) => (id === s.id ? null : s.id))}
           />

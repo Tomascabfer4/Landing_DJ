@@ -16,6 +16,10 @@
   --color-fg: #f5f5f7;
   --color-cyan: #00f0ff;
   --color-magenta: #ff00d4;
+  --color-lime: #c6ff3a;
+  --color-purple: #8b5cf6;
+  --color-orange: #ff5e1a;
+  --color-yellow: #ffd60a;
   --color-grid: rgba(245, 245, 247, 0.08);
 }
 

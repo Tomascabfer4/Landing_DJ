@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '../lib/gsap.js';
 
-export default function StatNumber({ to, suffix = '' }) {
+export default function StatNumber({ to, suffix = '', colorClass = 'text-cyan' }) {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current;
@@ -15,7 +15,7 @@ export default function StatNumber({ to, suffix = '' }) {
       onEnter: () => {
         gsap.to(obj, {
           n: to,
-          duration: 1.5,
+          duration: 1.8,
           ease: 'power2.out',
           onUpdate: () => { el.textContent = `${Math.round(obj.n)}${suffix}`; },
         });
@@ -23,5 +23,5 @@ export default function StatNumber({ to, suffix = '' }) {
     });
     return () => st.kill();
   }, [to, suffix]);
-  return <span ref={ref} className="font-display text-cyan">0{suffix}</span>;
+  return <span ref={ref} className={`font-display ${colorClass}`}>0{suffix}</span>;
 }

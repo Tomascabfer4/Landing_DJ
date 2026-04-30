@@ -36,15 +36,18 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative px-6 sm:px-12 py-32">
+    <section id="contact" className="relative px-6 sm:px-12 py-32 overflow-hidden">
+      <div className="pointer-events-none absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-orange/15 blur-[140px]" />
+      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-cyan/15 blur-[120px]" />
       <SectionHeader index="04" label="BOOKING" />
 
-      <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <div className="relative grid lg:grid-cols-2 gap-16 items-start">
         <div className="flex flex-col gap-8">
           <h2 className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.85] uppercase">
-            {HEADLINE.map((line, i) => (
-              <span key={i} className="block">{line}</span>
-            ))}
+            {HEADLINE.map((line, i) => {
+              const colors = ['text-fg', 'bg-gradient-to-r from-magenta via-purple to-cyan bg-clip-text text-transparent', 'text-lime'];
+              return <span key={i} className={`block ${colors[i % colors.length]}`}>{line}</span>;
+            })}
           </h2>
 
           <MagneticButton
