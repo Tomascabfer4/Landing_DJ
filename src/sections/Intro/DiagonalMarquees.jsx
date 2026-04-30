@@ -1,14 +1,21 @@
+import { useEffect, useState } from 'react';
 import Marquee from '../../components/Marquee.jsx';
 
 const SEP = ' ★ ';
 
 export default function DiagonalMarquees({ blur = 0 }) {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    setReduce(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+  }, []);
+  if (reduce) return null;
+
   const row1 = `K1D T0M1${SEP}TECHNO${SEP}URBAN${SEP}PRODUCER${SEP}`.repeat(6);
   const row2 = `MORE THAN MUSIC${SEP}AN EXPERIENCE${SEP}LIVE THE BEAT${SEP}`.repeat(4);
 
   return (
     <div
-      className="pointer-events-none absolute right-[-10%] top-0 h-full w-[55%] z-[5]"
+      className="hidden md:block pointer-events-none absolute right-[-10%] top-0 h-full w-[55%] z-[5]"
       style={{ filter: `blur(${blur}px)` }}
     >
       <Marquee

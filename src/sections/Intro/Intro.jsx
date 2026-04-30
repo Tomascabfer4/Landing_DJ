@@ -14,6 +14,15 @@ export default function Intro() {
   const hintRef = useRef(null);
   const { unlock } = useLenis();
 
+  useEffect(() => {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      setPhase('done');
+      setIntroReady(true);
+      unlock();
+    }
+  }, [unlock]);
+
   const onCounterDone = () => {
     const flash = flashRef.current;
     const cw = counterWrapRef.current;
