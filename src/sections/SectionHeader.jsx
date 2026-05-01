@@ -1,14 +1,13 @@
 import { useLayoutEffect, useRef } from 'react';
-import { revealChildren } from '../lib/reveal.js';
+import { revealOnEnter } from '../lib/reveal.js';
 
 export default function SectionHeader({ index, label }) {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
-    const st = revealChildren(ref.current, {
-      y: 16,
+    const st = revealOnEnter(ref.current, {
+      y: 18,
       duration: 0.9,
-      stagger: 0.07,
       start: 'top 92%',
     });
     return () => st?.kill();
