@@ -8,7 +8,7 @@ const SOURCES = [
   '/video/loop/v4.mp4',
 ];
 
-const STRIP_COUNT = 9;
+const STRIP_COUNT = 11;
 
 export default function VideoLoop({ active = true }) {
   const [current, setCurrent] = useState(0);
@@ -43,35 +43,39 @@ export default function VideoLoop({ active = true }) {
     a.play().catch(() => {});
   }, [active]);
 
-  const playTransition = () => {
+  const playTransition = ({ onCovered } = {}) => {
     return new Promise((resolve) => {
       const strips = stripsRef.current.filter(Boolean);
       const transition = transitionRef.current;
-      if (!strips.length || !transition) { resolve(); return; }
+      if (!strips.length || !transition) { onCovered?.(); resolve(); return; }
 
       gsap.set(transition, { autoAlpha: 1 });
+      gsap.set(strips, { xPercent: (i) => (i % 2 === 0 ? -160 : 160) });
 
       const tl = gsap.timeline({ onComplete: resolve });
 
-      tl.fromTo(strips, {
-        xPercent: (i) => (i % 2 === 0 ? -130 : 130),
-      }, {
-        xPercent: 0,
-        duration: 1.3,
-        ease: 'expo.inOut',
-        stagger: 0.08,
-      });
-
-      tl.add('held', '+=0.45');
-
       tl.to(strips, {
-        xPercent: (i) => (i % 2 === 0 ? 130 : -130),
+        xPercent: 0,
         duration: 1.4,
         ease: 'expo.inOut',
-        stagger: 0.08,
+        stagger: 0.07,
+      });
+
+      tl.add('covered', '+=0');
+      tl.add('held', '+=0.5');
+
+      tl.to(strips, {
+        xPercent: (i) => (i % 2 === 0 ? 160 : -160),
+        duration: 1.4,
+        ease: 'expo.inOut',
+        stagger: 0.07,
       }, 'held');
 
       tl.set(transition, { autoAlpha: 0 });
+
+      if (onCovered) {
+        tl.call(onCovered, null, 'covered');
+      }
     });
   };
 
@@ -94,10 +98,12 @@ export default function VideoLoop({ active = true }) {
       gsap.set(fromEl, { autoAlpha: 0 });
       gsap.set(toEl, { autoAlpha: 1 });
     } else {
-      const trans = playTransition();
-      gsap.set(toEl, { autoAlpha: 1 });
-      gsap.set(fromEl, { autoAlpha: 0 });
-      await trans;
+      await playTransition({
+        onCovered: () => {
+          gsap.set(toEl, { autoAlpha: 1 });
+          gsap.set(fromEl, { autoAlpha: 0 });
+        },
+      });
     }
 
     slotRef.current = toSlot;
@@ -143,8 +149,11 @@ export default function VideoLoop({ active = true }) {
 
       <div
         ref={transitionRef}
-        className="pointer-events-none absolute inset-[-25%] z-[10] opacity-0 invisible"
-        style={{ transform: 'rotate(-22deg)' }}
+        className="pointer-events-none absolute z-[10] opacity-0 invisible"
+        style={{
+          inset: '-60%',
+          transform: 'rotate(-22deg)',
+        }}
         aria-hidden
       >
         {Array.from({ length: STRIP_COUNT }).map((_, i) => {
@@ -153,7 +162,7 @@ export default function VideoLoop({ active = true }) {
             ? 'bg-gradient-to-r from-blood via-crimson to-red'
             : 'bg-gradient-to-l from-red via-crimson to-blood';
           const text = goesLeft ? 'K1D' : 'T0M1';
-          const word = `${text} · `.repeat(20).toUpperCase();
+          const word = `${text} · `.repeat(28).toUpperCase();
           return (
             <div
               key={i}
@@ -161,8 +170,8 @@ export default function VideoLoop({ active = true }) {
               className={`relative ${colors} flex items-center overflow-hidden text-bg`}
               style={{
                 height: `${100 / STRIP_COUNT}%`,
-                width: '160%',
-                marginLeft: '-30%',
+                width: '260%',
+                marginLeft: '-80%',
                 borderTop: '2px solid #000',
                 borderBottom: '2px solid #000',
               }}
