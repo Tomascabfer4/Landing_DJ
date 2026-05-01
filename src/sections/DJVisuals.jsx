@@ -46,8 +46,8 @@ export default function DJVisuals() {
       const num = slide.querySelector('[data-num]');
       const meta = slide.querySelector('[data-meta]');
       if (photo) {
-        gsap.fromTo(photo, { y: 80 }, {
-          y: -80,
+        gsap.fromTo(photo, { y: 50 }, {
+          y: -50,
           ease: 'none',
           scrollTrigger: {
             trigger: slide,
@@ -59,8 +59,8 @@ export default function DJVisuals() {
         });
       }
       if (num) {
-        gsap.fromTo(num, { xPercent: -25, opacity: 0.4 }, {
-          xPercent: 25,
+        gsap.fromTo(num, { xPercent: -10, opacity: 0.5 }, {
+          xPercent: 10,
           opacity: 1,
           ease: 'none',
           scrollTrigger: {
@@ -144,7 +144,6 @@ export default function DJVisuals() {
         {SLIDES.map((s, i) => (
           <Slide key={s.id} slide={s} index={i} />
         ))}
-        <div className="shrink-0 w-[10vw] h-full" />
       </div>
     </section>
   );
@@ -156,7 +155,7 @@ function Slide({ slide, index }) {
     <div
       data-slide
       className="relative shrink-0 h-full flex items-end overflow-hidden"
-      style={{ width: '92vw' }}
+      style={{ width: '100vw' }}
     >
       <div className="absolute inset-0 px-12 sm:px-20">
         <div
