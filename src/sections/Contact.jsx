@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import SectionHeader from './SectionHeader.jsx';
 import MagneticButton from '../components/MagneticButton.jsx';
 import { socials } from '../data/socials.js';
 import { validateContact } from './contact-validation.js';
@@ -36,10 +35,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative px-6 sm:px-12 py-32 overflow-hidden">
+    <section id="contact" className="relative px-6 sm:px-12 py-24 sm:py-28 overflow-hidden">
       <div className="pointer-events-none absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-red/25 blur-[140px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-blood/40 blur-[120px]" />
-      <SectionHeader index="04" label="BOOKING" />
 
       <div className="relative grid lg:grid-cols-2 gap-16 items-start">
         <div className="flex flex-col gap-8">

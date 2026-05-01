@@ -31,14 +31,14 @@ export default function SectionDivider({ text, height = '32vh' }) {
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red/60 to-transparent" />
 
-      <div className="pointer-events-none absolute top-1/2 left-6 sm:left-12 -translate-y-1/2 font-body text-fg/40 text-[10px] tracking-[0.6em]">
+      <div className="pointer-events-none hidden md:block absolute top-1/2 left-12 -translate-y-1/2 font-body text-fg/40 text-[10px] tracking-[0.6em]">
         // SECTION
       </div>
-      <div className="pointer-events-none absolute top-1/2 right-6 sm:right-12 -translate-y-1/2 font-body text-red/60 text-[10px] tracking-[0.6em]">
+      <div className="pointer-events-none hidden md:block absolute top-1/2 right-12 -translate-y-1/2 font-body text-red/60 text-[10px] tracking-[0.6em]">
         K1D · T0M1
       </div>
 
-      <div className="relative h-full flex items-center justify-center px-12 sm:px-32">
+      <div className="relative h-full flex items-center justify-center px-6 md:px-32">
         <div className="relative w-full max-w-[680px]" style={{ height: 'clamp(64px, 9vh, 110px)' }}>
           <GraffitiPressure
             text={text}

@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
 import { revealOnEnter, revealChildren } from '../lib/reveal.js';
-import SectionHeader from './SectionHeader.jsx';
 
 const GENRES = [
   { label: 'EDM',         tone: 'red' },
@@ -36,28 +35,28 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className="relative px-6 sm:px-12 py-32 overflow-hidden">
+    <section id="about" className="relative px-6 sm:px-12 py-24 sm:py-28 overflow-hidden">
       <div className="pointer-events-none absolute -top-32 left-1/4 w-[520px] h-[520px] rounded-full bg-red/15 blur-[170px]" />
       <div className="pointer-events-none absolute bottom-0 -right-32 w-[600px] h-[600px] rounded-full bg-blood/35 blur-[180px]" />
 
-      <SectionHeader index="01" label="ABOUT" />
-
-      <div className="relative grid lg:grid-cols-12 gap-12 items-center mt-16">
+      <div className="relative grid lg:grid-cols-12 gap-12 items-center">
         <div ref={photoWrapRef} className="lg:col-span-5 relative flex justify-center">
-          <div className="absolute inset-x-0 top-6 bottom-10 bg-gradient-to-br from-red via-crimson to-blood opacity-60 blur-3xl rounded-full" />
-          <img
-            src="/images/cutout/3_SinFondo.png"
-            alt="K1D TOM1"
-            loading="lazy"
-            className="relative max-h-[78vh] w-auto object-contain"
-            style={{ filter: 'drop-shadow(0 35px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.3))' }}
-          />
-          <span
-            className="absolute bottom-6 left-1/2 font-graffiti text-spark text-2xl tracking-[0.15em] bg-bg/80 px-4 py-1 border border-spark/40 backdrop-blur"
-            style={{ transform: 'translate(-50%, 0) rotate(-3deg)' }}
-          >
-            EST · MMXX
-          </span>
+          <div className="relative w-full max-w-[460px] aspect-[3/4] flex items-end justify-center">
+            <div className="absolute inset-x-0 top-8 bottom-8 bg-gradient-to-br from-red via-crimson to-blood opacity-60 blur-3xl rounded-full" />
+            <img
+              src="/images/cutout/3_SinFondo.png"
+              alt="K1D TOM1"
+              loading="lazy"
+              className="relative h-full w-auto max-w-full object-contain object-bottom"
+              style={{ filter: 'drop-shadow(0 35px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.3))' }}
+            />
+            <span
+              className="absolute -bottom-3 left-1/2 -translate-x-1/2 font-graffiti text-spark text-xl sm:text-2xl tracking-[0.35em] bg-bg/85 px-4 py-1 border border-spark/40 backdrop-blur whitespace-nowrap"
+              style={{ transform: 'translate(-50%, 0) rotate(-3deg)' }}
+            >
+              EST · 2020
+            </span>
+          </div>
         </div>
 
         <div className="lg:col-span-7 flex flex-col gap-10">

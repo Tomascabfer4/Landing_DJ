@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import SectionHeader from './SectionHeader.jsx';
 import SetRow from './SetRow.jsx';
 import { sets } from '../data/sets.js';
 
@@ -25,11 +24,10 @@ export default function Sets() {
       id="sets"
       ref={sectionRef}
       data-cursor="glitch"
-      className="relative px-6 sm:px-12 py-32"
+      className="relative px-6 sm:px-12 py-24 sm:py-28"
     >
       <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-red/25 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-20 left-10 w-[300px] h-[300px] rounded-full bg-blood/30 blur-[100px]" />
-      <SectionHeader index="03" label="SETS" />
       <div className="relative">
         {sets.map((s, i) => (
           <SetRow

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '../lib/gsap.js';
-import SectionHeader from './SectionHeader.jsx';
 
 const SLIDES = [
   { id: '01', src: '/images/cutout/1_SinFondo.png', tag: 'NIGHT TRANSIT',  city: 'BERLIN',    bpm: 132, mood: 'RAW' },
@@ -118,12 +117,8 @@ export default function DJVisuals() {
       className="relative bg-bg overflow-hidden"
       style={{ height: '100vh' }}
     >
-      <div className="absolute top-0 left-0 right-0 z-30 px-6 sm:px-12 pt-10 pointer-events-none">
-        <SectionHeader index="02" label="LIVE" />
-      </div>
-
-      <div className="pointer-events-none absolute top-0 left-0 right-0 z-30 px-6 sm:px-12 pt-32">
-        <p className="font-body text-fg/50 text-xs tracking-[0.5em] uppercase max-w-md">
+      <div className="pointer-events-none absolute top-0 left-0 right-0 z-30 px-6 sm:px-12 pt-8">
+        <p className="font-body text-fg/50 text-[10px] sm:text-xs tracking-[0.5em] uppercase">
           Scroll · Each frame is a moment on stage
         </p>
       </div>
@@ -175,14 +170,14 @@ function Slide({ slide, index }) {
         </div>
       </div>
 
-      <div className={`relative z-10 flex h-full w-full items-end ${flip ? 'flex-row-reverse' : ''} px-10 sm:px-20 pb-16 gap-8`}>
-        <div className="relative h-[88%] flex items-end">
+      <div className={`relative z-10 flex h-full w-full items-end ${flip ? 'flex-row-reverse' : ''} px-10 sm:px-20 pt-20 pb-20 gap-8`}>
+        <div className="relative h-full max-h-[78vh] flex items-end">
           <div className="absolute -inset-8 bg-gradient-to-tr from-blood via-crimson to-red opacity-40 blur-3xl" />
           <img
             data-photo
             src={slide.src}
             alt={`${slide.tag} — ${slide.city}`}
-            className="relative max-h-[80vh] object-contain"
+            className="relative h-full w-auto max-w-full object-contain object-bottom"
             style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(255,45,45,0.3))' }}
             loading="lazy"
           />
