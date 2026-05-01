@@ -57,18 +57,18 @@ export default function VideoLoop({ active = true }) {
         xPercent: (i) => (i % 2 === 0 ? -130 : 130),
       }, {
         xPercent: 0,
-        duration: 0.55,
+        duration: 1.3,
         ease: 'expo.inOut',
-        stagger: 0.04,
+        stagger: 0.08,
       });
 
-      tl.add('held', '+=0.05');
+      tl.add('held', '+=0.45');
 
       tl.to(strips, {
         xPercent: (i) => (i % 2 === 0 ? 130 : -130),
-        duration: 0.6,
+        duration: 1.4,
         ease: 'expo.inOut',
-        stagger: 0.04,
+        stagger: 0.08,
       }, 'held');
 
       tl.set(transition, { autoAlpha: 0 });
@@ -129,7 +129,7 @@ export default function VideoLoop({ active = true }) {
         preload="auto"
         aria-hidden
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: 'brightness(0.55) contrast(1.1) saturate(0.7)', opacity: 1 }}
+        style={{ opacity: 1 }}
       />
       <video
         ref={bRef}
@@ -138,15 +138,8 @@ export default function VideoLoop({ active = true }) {
         preload="auto"
         aria-hidden
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: 'brightness(0.55) contrast(1.1) saturate(0.7)', opacity: 0 }}
+        style={{ opacity: 0 }}
       />
-
-      <div className="pointer-events-none absolute inset-0 z-[2]" style={{
-        background:
-          'radial-gradient(circle at 30% 30%, rgba(255,45,45,0.28), transparent 60%),' +
-          'radial-gradient(circle at 70% 70%, rgba(122,0,25,0.55), transparent 65%),' +
-          'linear-gradient(180deg, rgba(10,7,7,0.55) 0%, rgba(10,7,7,0.7) 100%)',
-      }} />
 
       <div
         ref={transitionRef}
@@ -157,29 +150,29 @@ export default function VideoLoop({ active = true }) {
         {Array.from({ length: STRIP_COUNT }).map((_, i) => {
           const goesLeft = i % 2 === 0;
           const colors = goesLeft
-            ? 'bg-gradient-to-r from-blood via-crimson to-red text-fg'
-            : 'bg-gradient-to-l from-red via-crimson to-blood text-fg';
+            ? 'bg-gradient-to-r from-blood via-crimson to-red'
+            : 'bg-gradient-to-l from-red via-crimson to-blood';
           const text = goesLeft ? 'K1D' : 'T0M1';
-          const word = `${text} · `.repeat(20);
+          const word = `${text} · `.repeat(20).toUpperCase();
           return (
             <div
               key={i}
               ref={(el) => { stripsRef.current[i] = el; }}
-              className={`relative ${colors} flex items-center overflow-hidden`}
+              className={`relative ${colors} flex items-center overflow-hidden text-bg`}
               style={{
                 height: `${100 / STRIP_COUNT}%`,
                 width: '160%',
                 marginLeft: '-30%',
-                borderTop: '1px solid rgba(255,45,45,0.4)',
-                borderBottom: '1px solid rgba(0,0,0,0.4)',
+                borderTop: '2px solid #000',
+                borderBottom: '2px solid #000',
               }}
             >
               <span
-                className="font-graffiti whitespace-nowrap leading-none px-4 select-none"
+                className="font-graffiti whitespace-nowrap leading-none px-4 select-none uppercase"
                 style={{
                   fontSize: 'clamp(2rem, 5vw, 4rem)',
                   letterSpacing: '0.08em',
-                  textShadow: '0 0 16px rgba(0,0,0,0.6)',
+                  color: '#000',
                   transform: 'translateY(2px)',
                 }}
               >
