@@ -73,6 +73,8 @@ export default function Intro() {
         backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)',
       }} />
 
+      <div className="pointer-events-none absolute bottom-0 inset-x-0 h-[35vh] z-[7] bg-gradient-to-b from-transparent via-bg/70 to-bg" />
+
       {phase !== 'open' && (
         <div
           ref={stackRef}

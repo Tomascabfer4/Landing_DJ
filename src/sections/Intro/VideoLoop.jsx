@@ -116,13 +116,26 @@ export default function VideoLoop({ active = true }) {
     const el = slotRef.current === 'a' ? aRef.current : bRef.current;
     if (!el) return;
 
-    const handleEnded = () => {
+    const trigger = () => {
+      if (animatingRef.current) return;
       const next = (current + 1) % SOURCES.length;
       swap(next);
     };
 
-    el.addEventListener('ended', handleEnded);
-    return () => el.removeEventListener('ended', handleEnded);
+    const onTimeUpdate = () => {
+      if (animatingRef.current) return;
+      const dur = el.duration;
+      if (!Number.isFinite(dur) || dur <= 0) return;
+      const remaining = dur - el.currentTime;
+      if (remaining > 0 && remaining < 1.8) trigger();
+    };
+
+    el.addEventListener('timeupdate', onTimeUpdate);
+    el.addEventListener('ended', trigger);
+    return () => {
+      el.removeEventListener('timeupdate', onTimeUpdate);
+      el.removeEventListener('ended', trigger);
+    };
   }, [active, current]);
 
   return (
@@ -162,7 +175,7 @@ export default function VideoLoop({ active = true }) {
             ? 'bg-gradient-to-r from-blood via-crimson to-red'
             : 'bg-gradient-to-l from-red via-crimson to-blood';
           const text = goesLeft ? 'K1D' : 'T0M1';
-          const word = `${text} · `.repeat(28).toUpperCase();
+          const word = `${text} · `.repeat(100).toUpperCase();
           return (
             <div
               key={i}
