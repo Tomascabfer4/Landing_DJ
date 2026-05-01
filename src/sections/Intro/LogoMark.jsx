@@ -35,6 +35,9 @@ export default function LogoMark({ play = false, onDone }) {
   const boxRRef = useRef(null);
   const txtLRef = useRef(null);
   const txtRRef = useRef(null);
+  const onDoneRef = useRef(onDone);
+
+  useEffect(() => { onDoneRef.current = onDone; }, [onDone]);
 
   useEffect(() => {
     if (!play) return;
@@ -43,11 +46,11 @@ export default function LogoMark({ play = false, onDone }) {
       gsap.set([boxLRef.current, boxRRef.current, txtLRef.current, txtRRef.current], { opacity: 1, scaleX: 1, y: 0 });
       gsap.set(tickTopRef.current?.children || [], { opacity: 1, scaleY: 1 });
       gsap.set(tickBotRef.current?.children || [], { opacity: 1, scaleY: 1 });
-      onDone?.();
+      onDoneRef.current?.();
       return;
     }
 
-    const tl = gsap.timeline({ onComplete: () => onDone?.() });
+    const tl = gsap.timeline({ onComplete: () => onDoneRef.current?.() });
 
     tl.from([boxLRef.current, boxRRef.current], {
       scaleX: 0,
@@ -87,7 +90,7 @@ export default function LogoMark({ play = false, onDone }) {
     }
 
     return () => tl.kill();
-  }, [play, onDone]);
+  }, [play]);
 
   return (
     <div ref={rootRef} className="relative inline-block select-none" aria-label="K1D TOM1">

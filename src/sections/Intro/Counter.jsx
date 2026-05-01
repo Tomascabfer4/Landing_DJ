@@ -6,6 +6,11 @@ export default function Counter({ duration = 2.7, onComplete, onProgress, classN
   const elRef = useRef(null);
   const valueRef = useRef({ n: 0 });
   const lastGlitchAt = useRef(0);
+  const onCompleteRef = useRef(onComplete);
+  const onProgressRef = useRef(onProgress);
+
+  useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
+  useEffect(() => { onProgressRef.current = onProgress; }, [onProgress]);
 
   useEffect(() => {
     const el = elRef.current;
@@ -13,8 +18,8 @@ export default function Counter({ duration = 2.7, onComplete, onProgress, classN
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
       el.textContent = '100';
-      onProgress?.(100);
-      onComplete?.();
+      onProgressRef.current?.(100);
+      onCompleteRef.current?.();
       return;
     }
 
@@ -33,16 +38,16 @@ export default function Counter({ duration = 2.7, onComplete, onProgress, classN
           }
         }
         el.textContent = str;
-        onProgress?.(valueRef.current.n);
+        onProgressRef.current?.(valueRef.current.n);
       },
       onComplete: () => {
         el.textContent = '100';
-        onProgress?.(100);
-        onComplete?.();
+        onProgressRef.current?.(100);
+        onCompleteRef.current?.();
       },
     });
     return () => tween.kill();
-  }, [duration, onComplete, onProgress]);
+  }, [duration]);
 
   return (
     <div

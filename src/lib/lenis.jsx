@@ -1,5 +1,5 @@
 import Lenis from '@studio-freight/lenis';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollTrigger } from './gsap.js';
 
 const LenisContext = createContext(null);
@@ -33,11 +33,13 @@ export function LenisProvider({ children, startLocked = true }) {
     };
   }, [startLocked]);
 
-  const lock = () => { lenisRef.current?.stop(); setLocked(true); };
-  const unlock = () => { lenisRef.current?.start(); setLocked(false); };
+  const lock = useCallback(() => { lenisRef.current?.stop(); setLocked(true); }, []);
+  const unlock = useCallback(() => { lenisRef.current?.start(); setLocked(false); }, []);
+
+  const value = useMemo(() => ({ lock, unlock, locked }), [lock, unlock, locked]);
 
   return (
-    <LenisContext.Provider value={{ lock, unlock, locked }}>
+    <LenisContext.Provider value={value}>
       {children}
     </LenisContext.Provider>
   );
