@@ -1,27 +1,17 @@
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '../lib/gsap.js';
+import { useLayoutEffect, useRef } from 'react';
+import { revealChildren } from '../lib/reveal.js';
 
 export default function SectionHeader({ index, label }) {
   const ref = useRef(null);
 
-  useEffect(() => {
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const el = ref.current;
-    if (!el || reduce) return;
-
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: 'top 90%',
-      once: true,
-      onEnter: () => gsap.from(el.children, {
-        y: 20,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'expo.out',
-        stagger: 0.08,
-      }),
+  useLayoutEffect(() => {
+    const st = revealChildren(ref.current, {
+      y: 16,
+      duration: 0.9,
+      stagger: 0.07,
+      start: 'top 92%',
     });
-    return () => st.kill();
+    return () => st?.kill();
   }, []);
 
   return (

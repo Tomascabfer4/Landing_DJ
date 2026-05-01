@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '../lib/gsap.js';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap.js';
+import { revealOnEnter } from '../lib/reveal.js';
 import { Play, X } from 'lucide-react';
 
 const ACCENTS = ['text-red', 'text-crimson', 'text-spark', 'text-ember', 'text-blood'];
@@ -9,21 +10,9 @@ export default function SetRow({ set, expanded, onToggle, index = 0 }) {
   const titleRef = useRef(null);
   const accent = ACCENTS[index % ACCENTS.length];
 
-  useEffect(() => {
-    const el = rowRef.current;
-    if (!el) return;
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: 'top 88%',
-      once: true,
-      onEnter: () => gsap.from(el, {
-        y: 30,
-        opacity: 0,
-        duration: 1.0,
-        ease: 'expo.out',
-      }),
-    });
-    return () => st.kill();
+  useLayoutEffect(() => {
+    const st = revealOnEnter(rowRef.current, { y: 28, duration: 0.95, start: 'top 90%' });
+    return () => st?.kill();
   }, []);
 
   const onMouseMove = (e) => {

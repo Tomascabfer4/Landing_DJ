@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '../lib/gsap.js';
+import { useLayoutEffect, useRef } from 'react';
+import { revealOnEnter, revealChildren } from '../lib/reveal.js';
 import SectionHeader from './SectionHeader.jsx';
 
 const GENRES = [
@@ -25,60 +25,14 @@ export default function About() {
   const genresRef = useRef(null);
   const bioRef = useRef(null);
 
-  useEffect(() => {
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-
-    const triggers = [];
-    const fadeUp = (el, opts = {}) => {
-      if (!el) return;
-      triggers.push(ScrollTrigger.create({
-        trigger: el,
-        start: 'top 82%',
-        once: true,
-        onEnter: () => gsap.from(el, {
-          y: 40,
-          opacity: 0,
-          duration: 1.1,
-          ease: 'expo.out',
-          ...opts,
-        }),
-      }));
-    };
-
-    fadeUp(titleRef.current);
-    fadeUp(bioRef.current, { duration: 1.0 });
-
-    if (photoWrapRef.current) {
-      triggers.push(ScrollTrigger.create({
-        trigger: photoWrapRef.current,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => gsap.from(photoWrapRef.current, {
-          x: -50,
-          opacity: 0,
-          duration: 1.3,
-          ease: 'expo.out',
-        }),
-      }));
-    }
-
-    if (genresRef.current) {
-      triggers.push(ScrollTrigger.create({
-        trigger: genresRef.current,
-        start: 'top 82%',
-        once: true,
-        onEnter: () => gsap.from(genresRef.current.children, {
-          y: 24,
-          opacity: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: 0.07,
-        }),
-      }));
-    }
-
-    return () => triggers.forEach((t) => t.kill());
+  useLayoutEffect(() => {
+    const triggers = [
+      revealOnEnter(titleRef.current, { y: 32, duration: 1.1, start: 'top 85%' }),
+      revealOnEnter(photoWrapRef.current, { y: 40, duration: 1.2, start: 'top 80%' }),
+      revealChildren(genresRef.current, { y: 18, duration: 0.85, stagger: 0.07, start: 'top 88%' }),
+      revealOnEnter(bioRef.current, { y: 26, duration: 1.0, start: 'top 88%' }),
+    ];
+    return () => triggers.forEach((t) => t?.kill());
   }, []);
 
   return (
@@ -99,7 +53,7 @@ export default function About() {
             style={{ filter: 'drop-shadow(0 35px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 80px rgba(255,45,45,0.3))' }}
           />
           <span
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 font-graffiti text-spark text-2xl tracking-[0.15em] bg-bg/80 px-4 py-1 border border-spark/40 backdrop-blur"
+            className="absolute bottom-6 left-1/2 font-graffiti text-spark text-2xl tracking-[0.15em] bg-bg/80 px-4 py-1 border border-spark/40 backdrop-blur"
             style={{ transform: 'translate(-50%, 0) rotate(-3deg)' }}
           >
             EST · MMXX
@@ -115,15 +69,19 @@ export default function About() {
           </h2>
 
           <ul ref={genresRef} className="flex flex-wrap gap-3">
-            {GENRES.map((g, i) => (
-              <li
-                key={g.label}
-                className={`inline-block px-5 py-2 font-graffiti text-2xl sm:text-3xl uppercase tracking-wide border-2 ${TONE_CLASS[g.tone]}`}
-                style={{ transform: `rotate(${(i % 2 === 0 ? -1 : 1) * (1 + (i % 3) * 0.6)}deg)` }}
-              >
-                {g.label}
-              </li>
-            ))}
+            {GENRES.map((g, i) => {
+              const rot = (i % 2 === 0 ? -1 : 1) * (1 + (i % 3) * 0.6);
+              return (
+                <li key={g.label} className="inline-block">
+                  <span
+                    className={`inline-block px-5 py-2 font-graffiti text-2xl sm:text-3xl uppercase tracking-wide border-2 ${TONE_CLASS[g.tone]}`}
+                    style={{ transform: `rotate(${rot}deg)` }}
+                  >
+                    {g.label}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
 
           <p ref={bioRef} className="font-body text-fg/85 text-lg leading-relaxed max-w-prose">
