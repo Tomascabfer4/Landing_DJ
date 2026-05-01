@@ -4,6 +4,7 @@ import { useLenis } from '../../lib/lenis.jsx';
 import { setIntroReady } from '../../lib/useIntroGate.js';
 import Counter from './Counter.jsx';
 import GraffitiBar from './GraffitiBar.jsx';
+import VideoLoop from './VideoLoop.jsx';
 
 export default function Intro() {
   const [phase, setPhase] = useState('counting');
@@ -56,11 +57,14 @@ export default function Intro() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-bg">
-      <div className="pointer-events-none absolute inset-0 z-[5]">
-        <div className="absolute -top-40 -left-32 w-[640px] h-[640px] rounded-full bg-red/40 blur-[160px] animate-pulse-slow" />
-        <div className="absolute top-1/3 -right-32 w-[560px] h-[560px] rounded-full bg-crimson/45 blur-[170px] animate-pulse-slow" />
-        <div className="absolute bottom-0 left-1/3 w-[520px] h-[520px] rounded-full bg-blood/55 blur-[150px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-red/15 blur-[200px]" />
+      <div className="absolute inset-0 z-[1]">
+        <VideoLoop active />
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen">
+        <div className="absolute -top-40 -left-32 w-[640px] h-[640px] rounded-full bg-red/25 blur-[160px] animate-pulse-slow" />
+        <div className="absolute top-1/3 -right-32 w-[560px] h-[560px] rounded-full bg-crimson/30 blur-[170px] animate-pulse-slow" />
+        <div className="absolute bottom-0 left-1/3 w-[520px] h-[520px] rounded-full bg-blood/35 blur-[150px]" />
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-[6] mix-blend-overlay opacity-[0.07]" style={{
