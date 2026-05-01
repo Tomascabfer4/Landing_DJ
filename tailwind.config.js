@@ -6,6 +6,12 @@ export default {
       colors: {
         bg: 'var(--color-bg)',
         fg: 'var(--color-fg)',
+        red: 'var(--color-red)',
+        crimson: 'var(--color-crimson)',
+        blood: 'var(--color-blood)',
+        ember: 'var(--color-ember)',
+        spark: 'var(--color-spark)',
+        bone: 'var(--color-bone)',
         cyan: 'var(--color-cyan)',
         magenta: 'var(--color-magenta)',
         lime: 'var(--color-lime)',
@@ -17,10 +23,11 @@ export default {
       fontFamily: {
         display: ['"Sweet Sucker Punch"', 'sans-serif'],
         body: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        graffiti: ['"Sweet Sucker Punch"', 'cursive'],
       },
       backgroundImage: {
-        'noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")",
-        'gradient-techno': 'linear-gradient(135deg, var(--color-magenta) 0%, var(--color-purple) 50%, var(--color-cyan) 100%)',
+        'gradient-blood': 'linear-gradient(135deg, var(--color-red) 0%, var(--color-crimson) 50%, var(--color-blood) 100%)',
+        'gradient-ember': 'linear-gradient(135deg, var(--color-ember) 0%, var(--color-red) 50%, var(--color-blood) 100%)',
       },
       animation: {
         'pulse-slow': 'pulse 4s ease-in-out infinite',

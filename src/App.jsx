@@ -4,6 +4,7 @@ import Cursor from './components/Cursor.jsx';
 import SectionCurtain from './components/SectionCurtain.jsx';
 import Intro from './sections/Intro/Intro.jsx';
 import About from './sections/About.jsx';
+import DJVisuals from './sections/DJVisuals.jsx';
 import Sets from './sections/Sets.jsx';
 import Gallery from './sections/Gallery.jsx';
 import Contact from './sections/Contact.jsx';
@@ -17,11 +18,13 @@ export default function App() {
         <Intro />
         <SectionCurtain label="01 / ABOUT" />
         <About />
-        <SectionCurtain label="02 / SETS" />
+        <SectionCurtain label="02 / LIVE VISUALS" />
+        <DJVisuals />
+        <SectionCurtain label="03 / SETS" />
         <Sets />
-        <SectionCurtain label="03 / GALLERY" />
+        <SectionCurtain label="04 / GALLERY" />
         <Gallery />
-        <SectionCurtain label="04 / BOOKING" />
+        <SectionCurtain label="05 / BOOKING" />
         <Contact />
       </main>
     </LenisProvider>

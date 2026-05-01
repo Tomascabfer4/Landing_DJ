@@ -36,8 +36,8 @@ export default function Gallery() {
 
   return (
     <section id="gallery" className="relative px-6 sm:px-12 py-32 overflow-hidden">
-      <div className="pointer-events-none absolute top-1/3 -left-20 w-[420px] h-[420px] rounded-full bg-purple/20 blur-[140px]" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 w-[360px] h-[360px] rounded-full bg-lime/15 blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/3 -left-20 w-[420px] h-[420px] rounded-full bg-blood/40 blur-[140px]" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 w-[360px] h-[360px] rounded-full bg-red/20 blur-[120px]" />
       <SectionHeader index="03" label="GALLERY" />
 
       <div
@@ -52,7 +52,7 @@ export default function Gallery() {
             type="button"
             onClick={() => setIndex(i)}
             style={{ gridColumn: `span ${g.col}`, gridRow: `span ${g.row}` }}
-            className="group relative overflow-hidden bg-fg/5 ring-0 hover:ring-2 hover:ring-cyan/60 transition-all"
+            className="group relative overflow-hidden bg-fg/5 ring-0 hover:ring-2 hover:ring-red/70 transition-all"
           >
             <RevealImage
               src={g.src}
@@ -61,10 +61,10 @@ export default function Gallery() {
               className="h-full w-full"
               imgClassName="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
-            <span className="absolute right-3 top-3 font-body text-xs tracking-[0.3em] text-fg/0 group-hover:text-lime bg-bg/0 group-hover:bg-bg/70 px-2 py-1 transition-all">
+            <span className="absolute right-3 top-3 font-body text-xs tracking-[0.3em] text-fg/0 group-hover:text-spark bg-bg/0 group-hover:bg-bg/70 px-2 py-1 transition-all">
               {String(i + 1).padStart(3, '0')} / {String(gallery.length).padStart(3, '0')}
             </span>
-            <span className="absolute left-0 bottom-0 right-0 h-1 bg-gradient-to-r from-magenta via-purple to-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
+            <span className="absolute left-0 bottom-0 right-0 h-1 bg-gradient-to-r from-blood via-crimson to-red scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
           </button>
         ))}
       </div>

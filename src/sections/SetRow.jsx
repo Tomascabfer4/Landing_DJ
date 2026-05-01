@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '../lib/gsap.js';
 import { Play, X } from 'lucide-react';
 
-const ACCENTS = ['text-magenta', 'text-cyan', 'text-lime', 'text-orange', 'text-purple'];
+const ACCENTS = ['text-red', 'text-crimson', 'text-spark', 'text-ember', 'text-blood'];
 
 export default function SetRow({ set, expanded, onToggle, index = 0 }) {
   const rowRef = useRef(null);
@@ -40,7 +40,7 @@ export default function SetRow({ set, expanded, onToggle, index = 0 }) {
     gsap.to(t, { x: 0, duration: 0.6, ease: 'power3.out' });
   };
 
-  const scUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(set.soundcloudUrl)}&color=%23ff00d4&auto_play=true`;
+  const scUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(set.soundcloudUrl)}&color=%23ff2d2d&auto_play=true`;
 
   return (
     <div ref={rowRef} className="border-t border-fg/15 last:border-b last:border-fg/15">
@@ -53,7 +53,7 @@ export default function SetRow({ set, expanded, onToggle, index = 0 }) {
         aria-expanded={expanded}
         className={`group relative w-full grid grid-cols-12 items-center gap-4 py-8 px-2 overflow-hidden transition-colors ${expanded ? 'bg-magenta/10' : 'hover:bg-fg/5'}`}
       >
-        <span className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-magenta via-purple to-cyan scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500" />
+        <span className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-red via-crimson to-blood scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500" />
         <span className={`col-span-2 sm:col-span-1 font-body ${accent} text-sm tracking-widest`}>#{set.id}</span>
         <span
           ref={titleRef}
@@ -62,7 +62,7 @@ export default function SetRow({ set, expanded, onToggle, index = 0 }) {
           {set.title}
         </span>
         <span className="hidden sm:block sm:col-span-3 font-body text-fg/60 tracking-widest text-sm">
-          <span className="text-lime">{set.bpm}</span> BPM · <span className="text-yellow">{set.duration}</span> MIN
+          <span className="text-red">{set.bpm}</span> BPM · <span className="text-spark">{set.duration}</span> MIN
         </span>
         <span className="col-span-3 sm:col-span-2 flex items-center justify-end gap-2 font-body text-sm tracking-widest">
           {expanded ? <X size={18} /> : <Play size={18} />}

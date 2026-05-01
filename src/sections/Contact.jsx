@@ -37,15 +37,15 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative px-6 sm:px-12 py-32 overflow-hidden">
-      <div className="pointer-events-none absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-orange/15 blur-[140px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-cyan/15 blur-[120px]" />
+      <div className="pointer-events-none absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-red/25 blur-[140px]" />
+      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-blood/40 blur-[120px]" />
       <SectionHeader index="04" label="BOOKING" />
 
       <div className="relative grid lg:grid-cols-2 gap-16 items-start">
         <div className="flex flex-col gap-8">
           <h2 className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.85] uppercase">
             {HEADLINE.map((line, i) => {
-              const colors = ['text-fg', 'bg-gradient-to-r from-magenta via-purple to-cyan bg-clip-text text-transparent', 'text-lime'];
+              const colors = ['text-fg', 'bg-gradient-to-r from-red via-crimson to-blood bg-clip-text text-transparent', 'text-spark'];
               return <span key={i} className={`block ${colors[i % colors.length]}`}>{line}</span>;
             })}
           </h2>
@@ -54,12 +54,12 @@ export default function Contact() {
             as="button"
             type="button"
             onClick={copyEmail}
-            className="self-start font-body text-cyan text-2xl tracking-widest hover:text-magenta transition-colors"
+            className="self-start font-body text-red text-2xl tracking-widest hover:text-spark transition-colors"
           >
             {EMAIL} →
           </MagneticButton>
           {status === 'copied' && (
-            <span className="font-body text-xs tracking-[0.4em] text-magenta">COPIED</span>
+            <span className="font-body text-xs tracking-[0.4em] text-spark">COPIED</span>
           )}
 
           <ul className="flex flex-wrap gap-x-8 gap-y-3 mt-6">
@@ -68,7 +68,7 @@ export default function Contact() {
                 <a
                   href={s.href}
                   data-cursor="hover"
-                  className="font-body text-sm tracking-[0.4em] text-fg/70 hover:text-cyan border-b border-transparent hover:border-cyan transition-colors"
+                  className="font-body text-sm tracking-[0.4em] text-fg/70 hover:text-red border-b border-transparent hover:border-red transition-colors"
                 >
                   {s.label}
                 </a>

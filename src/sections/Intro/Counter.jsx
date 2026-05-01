@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from '../../lib/gsap.js';
 import { formatCounter, maybeGlitch } from './format-counter.js';
 
-export default function Counter({ duration = 2.7, onComplete, className = '' }) {
+export default function Counter({ duration = 2.7, onComplete, onProgress, className = '' }) {
   const elRef = useRef(null);
   const valueRef = useRef({ n: 0 });
   const lastGlitchAt = useRef(0);
@@ -13,6 +13,7 @@ export default function Counter({ duration = 2.7, onComplete, className = '' }) 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
       el.textContent = '100';
+      onProgress?.(100);
       onComplete?.();
       return;
     }
@@ -32,14 +33,16 @@ export default function Counter({ duration = 2.7, onComplete, className = '' }) 
           }
         }
         el.textContent = str;
+        onProgress?.(valueRef.current.n);
       },
       onComplete: () => {
         el.textContent = '100';
+        onProgress?.(100);
         onComplete?.();
       },
     });
     return () => tween.kill();
-  }, [duration, onComplete]);
+  }, [duration, onComplete, onProgress]);
 
   return (
     <div

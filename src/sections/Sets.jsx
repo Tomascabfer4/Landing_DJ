@@ -27,7 +27,8 @@ export default function Sets() {
       data-cursor="glitch"
       className="relative px-6 sm:px-12 py-32"
     >
-      <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-magenta/15 blur-[120px]" />
+      <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-red/25 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-20 left-10 w-[300px] h-[300px] rounded-full bg-blood/30 blur-[100px]" />
       <SectionHeader index="02" label="SETS" />
       <div className="relative">
         {sets.map((s, i) => (
