@@ -9,7 +9,7 @@ export default function Sets() {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const onEnter = () => document.body.dataset.cursorContext = 'glitch';
+    const onEnter = () => { document.body.dataset.cursorContext = 'glitch'; };
     const onLeave = () => { delete document.body.dataset.cursorContext; };
     el.addEventListener('mouseenter', onEnter);
     el.addEventListener('mouseleave', onLeave);
@@ -24,10 +24,11 @@ export default function Sets() {
       id="sets"
       ref={sectionRef}
       data-cursor="glitch"
-      className="relative px-6 sm:px-12 py-24 sm:py-28"
+      className="relative px-6 py-24 sm:px-12 sm:py-28"
     >
-      <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-red/25 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-20 left-10 w-[300px] h-[300px] rounded-full bg-blood/30 blur-[100px]" />
+      <div className="pointer-events-none absolute inset-x-0 -top-10 h-24 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.18),transparent_74%)] blur-3xl" />
+      <div className="pointer-events-none absolute right-10 top-20 h-[400px] w-[400px] rounded-full bg-red/25 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-20 left-10 h-[300px] w-[300px] rounded-full bg-blood/30 blur-[100px]" />
       <div className="relative">
         {sets.map((s, i) => (
           <SetRow

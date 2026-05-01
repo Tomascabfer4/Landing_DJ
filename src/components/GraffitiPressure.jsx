@@ -21,6 +21,7 @@ export default function GraffitiPressure({
   textColor = '#f5f5f7',
   fontFamily = '"Sweet Sucker Punch", cursive',
   minFontSize = 28,
+  maxFontSize = Infinity,
   maxScale = 1.5,
   minScale = 0.9,
   letterSpacing = '0.04em',
@@ -62,10 +63,12 @@ export default function GraffitiPressure({
 
   const setSize = useCallback(() => {
     if (!containerRef.current) return;
-    const w = containerRef.current.getBoundingClientRect().width;
-    const newSize = Math.max(minFontSize, w / Math.max(chars.length / 1.6, 1));
+    const { width, height } = containerRef.current.getBoundingClientRect();
+    const widthSize = width / Math.max(chars.length / 1.6, 1);
+    const heightSize = height > 0 ? height / Math.max(maxScale, 1) : Infinity;
+    const newSize = Math.max(minFontSize, Math.min(widthSize, heightSize, maxFontSize));
     setFontSize(newSize);
-  }, [chars.length, minFontSize]);
+  }, [chars.length, maxFontSize, maxScale, minFontSize]);
 
   useEffect(() => {
     const d = debounce(setSize, 100);
@@ -126,7 +129,9 @@ export default function GraffitiPressure({
         {chars.map((ch, i) => (
           <span
             key={i}
-            ref={(el) => (spansRef.current[i] = el)}
+            ref={(el) => {
+              spansRef.current[i] = el;
+            }}
             style={{
               display: 'inline-block',
               transformOrigin: 'center',
@@ -134,7 +139,7 @@ export default function GraffitiPressure({
               minWidth: ch === ' ' ? '0.45em' : undefined,
             }}
           >
-            {ch === ' ' ? ' ' : ch}
+            {ch === ' ' ? '\u00A0' : ch}
           </span>
         ))}
       </h2>

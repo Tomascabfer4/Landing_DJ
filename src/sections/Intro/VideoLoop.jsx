@@ -43,41 +43,43 @@ export default function VideoLoop({ active = true }) {
     a.play().catch(() => {});
   }, [active]);
 
-  const playTransition = ({ onCovered } = {}) => {
-    return new Promise((resolve) => {
-      const strips = stripsRef.current.filter(Boolean);
-      const transition = transitionRef.current;
-      if (!strips.length || !transition) { onCovered?.(); resolve(); return; }
+  const playTransition = ({ onCovered } = {}) => new Promise((resolve) => {
+    const strips = stripsRef.current.filter(Boolean);
+    const transition = transitionRef.current;
+    if (!strips.length || !transition) {
+      onCovered?.();
+      resolve();
+      return;
+    }
 
-      gsap.set(transition, { autoAlpha: 1 });
-      gsap.set(strips, { xPercent: (i) => (i % 2 === 0 ? -160 : 160) });
+    gsap.set(transition, { autoAlpha: 1 });
+    gsap.set(strips, { xPercent: (i) => (i % 2 === 0 ? -160 : 160) });
 
-      const tl = gsap.timeline({ onComplete: resolve });
+    const tl = gsap.timeline({ onComplete: resolve });
 
-      tl.to(strips, {
-        xPercent: 0,
-        duration: 1.4,
-        ease: 'expo.inOut',
-        stagger: 0.07,
-      });
-
-      tl.add('covered', '+=0');
-      tl.add('held', '+=0.5');
-
-      tl.to(strips, {
-        xPercent: (i) => (i % 2 === 0 ? 160 : -160),
-        duration: 1.4,
-        ease: 'expo.inOut',
-        stagger: 0.07,
-      }, 'held');
-
-      tl.set(transition, { autoAlpha: 0 });
-
-      if (onCovered) {
-        tl.call(onCovered, null, 'covered');
-      }
+    tl.to(strips, {
+      xPercent: 0,
+      duration: 1.4,
+      ease: 'expo.inOut',
+      stagger: 0.07,
     });
-  };
+
+    tl.add('covered', '+=0');
+    tl.add('held', '+=0.5');
+
+    tl.to(strips, {
+      xPercent: (i) => (i % 2 === 0 ? 160 : -160),
+      duration: 1.4,
+      ease: 'expo.inOut',
+      stagger: 0.07,
+    }, 'held');
+
+    tl.set(transition, { autoAlpha: 0 });
+
+    if (onCovered) {
+      tl.call(onCovered, null, 'covered');
+    }
+  });
 
   const swap = async (nextIdx) => {
     if (animatingRef.current) return;
@@ -91,7 +93,9 @@ export default function VideoLoop({ active = true }) {
     if (toEl) {
       toEl.src = SOURCES[nextIdx];
       toEl.load();
-      try { await toEl.play(); } catch {}
+      try {
+        await toEl.play();
+      } catch {}
     }
 
     if (reduceRef.current) {
@@ -147,7 +151,7 @@ export default function VideoLoop({ active = true }) {
         playsInline
         preload="auto"
         aria-hidden
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-[58%_center] md:object-center"
         style={{ opacity: 1 }}
       />
       <video
@@ -156,13 +160,13 @@ export default function VideoLoop({ active = true }) {
         playsInline
         preload="auto"
         aria-hidden
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-[58%_center] md:object-center"
         style={{ opacity: 0 }}
       />
 
       <div
         ref={transitionRef}
-        className="pointer-events-none absolute z-[10] opacity-0 invisible"
+        className="pointer-events-none invisible absolute z-[10] hidden opacity-0 md:block"
         style={{
           inset: '-60%',
           transform: 'rotate(-22deg)',
@@ -175,7 +179,7 @@ export default function VideoLoop({ active = true }) {
             ? 'bg-gradient-to-r from-blood via-crimson to-red'
             : 'bg-gradient-to-l from-red via-crimson to-blood';
           const text = goesLeft ? 'K1D' : 'T0M1';
-          const word = `${text} · `.repeat(100).toUpperCase();
+          const word = `${text} / `.repeat(100).toUpperCase();
           return (
             <div
               key={i}
@@ -190,7 +194,7 @@ export default function VideoLoop({ active = true }) {
               }}
             >
               <span
-                className="font-graffiti whitespace-nowrap leading-none px-4 select-none uppercase"
+                className="select-none whitespace-nowrap px-4 font-graffiti leading-none uppercase"
                 style={{
                   fontSize: 'clamp(2rem, 5vw, 4rem)',
                   letterSpacing: '0.08em',

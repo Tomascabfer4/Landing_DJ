@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { gsap } from '../../lib/gsap.js';
 import { useLenis } from '../../lib/lenis.jsx';
 import { setIntroReady } from '../../lib/useIntroGate.js';
@@ -16,19 +16,29 @@ export default function Intro() {
 
   const { unlock } = useLenis();
 
+  const openInstantly = useCallback(() => {
+    gsap.set(stackRef.current, { opacity: 0, y: -20 });
+    gsap.set(curtainLRef.current, { xPercent: -101 });
+    gsap.set(curtainRRef.current, { xPercent: 101 });
+    setPhase('open');
+    setIntroReady(true);
+    unlock();
+  }, [unlock]);
+
   useEffect(() => {
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
       setProgress(100);
-      setPhase('open');
-      setIntroReady(true);
-      unlock();
+      openInstantly();
     }
-  }, [unlock]);
+  }, [openInstantly]);
 
   const onCounterDone = () => {
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) { setPhase('open'); setIntroReady(true); unlock(); return; }
+    if (reduce) {
+      openInstantly();
+      return;
+    }
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -53,8 +63,6 @@ export default function Intro() {
     }, '<');
   };
 
-  const counting = phase === 'counting';
-
   return (
     <section className="relative h-screen w-full overflow-hidden bg-bg">
       <div className="absolute inset-0 z-[1]">
@@ -63,27 +71,27 @@ export default function Intro() {
 
       {phase !== 'open' && (
         <div className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen">
-          <div className="absolute -top-40 -left-32 w-[640px] h-[640px] rounded-full bg-red/25 blur-[160px] animate-pulse-slow" />
-          <div className="absolute top-1/3 -right-32 w-[560px] h-[560px] rounded-full bg-crimson/30 blur-[170px] animate-pulse-slow" />
-          <div className="absolute bottom-0 left-1/3 w-[520px] h-[520px] rounded-full bg-blood/35 blur-[150px]" />
+          <div className="absolute -left-32 -top-40 h-[640px] w-[640px] animate-pulse-slow rounded-full bg-red/25 blur-[160px]" />
+          <div className="absolute -right-32 top-1/3 h-[560px] w-[560px] animate-pulse-slow rounded-full bg-crimson/30 blur-[170px]" />
+          <div className="absolute bottom-0 left-1/3 h-[520px] w-[520px] rounded-full bg-blood/35 blur-[150px]" />
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-0 z-[6] mix-blend-overlay opacity-[0.07]" style={{
-        backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)',
-      }} />
+      <div
+        className="pointer-events-none absolute inset-0 z-[6] opacity-[0.07] mix-blend-overlay"
+        style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)' }}
+      />
 
-      <div className="pointer-events-none absolute bottom-0 inset-x-0 h-[35vh] z-[7] bg-gradient-to-b from-transparent via-bg/70 to-bg" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[7] h-[22vh] bg-gradient-to-b from-transparent via-bg/30 to-bg/75" />
+      <div className="pointer-events-none absolute inset-x-0 -bottom-14 z-[8] h-32 bg-gradient-to-b from-transparent via-blood/24 to-transparent blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 -bottom-24 z-[9] h-40 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.26),transparent_72%)] blur-[52px]" />
 
       {phase !== 'open' && (
-        <div
-          ref={stackRef}
-          className="absolute inset-0 z-[30] flex flex-col items-center justify-center gap-6 px-6"
-        >
+        <div ref={stackRef} className="absolute inset-0 z-[30] flex flex-col items-center justify-center gap-6 px-6">
           <img
             src="/images/logo-mark.png"
             alt="K1D TOM1"
-            className="w-[clamp(180px,28vw,360px)] h-auto drop-shadow-[0_0_30px_rgba(255,45,45,0.55)]"
+            className="h-auto w-[clamp(180px,28vw,360px)] drop-shadow-[0_0_30px_rgba(255,45,45,0.55)]"
           />
           <Counter
             onComplete={onCounterDone}
@@ -94,24 +102,16 @@ export default function Intro() {
         </div>
       )}
 
-      <div
-        ref={curtainLRef}
-        className="absolute top-0 left-0 h-full w-1/2 z-[20] overflow-hidden bg-bg"
-        aria-hidden
-      >
-        <div className="absolute inset-0 opacity-60 bg-gradient-to-br from-blood via-bg to-bg" />
+      <div ref={curtainLRef} className="absolute left-0 top-0 z-[20] h-full w-1/2 overflow-hidden bg-bg" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-br from-blood via-bg to-bg opacity-60" />
         <div className="absolute inset-y-0 right-0 w-px bg-red/70" />
-        <div className="absolute -top-16 -left-16 w-[420px] h-[420px] rounded-full bg-crimson/30 blur-[140px]" />
+        <div className="absolute -left-16 -top-16 h-[420px] w-[420px] rounded-full bg-crimson/30 blur-[140px]" />
       </div>
 
-      <div
-        ref={curtainRRef}
-        className="absolute top-0 right-0 h-full w-1/2 z-[20] overflow-hidden bg-bg"
-        aria-hidden
-      >
-        <div className="absolute inset-0 opacity-60 bg-gradient-to-bl from-red via-bg to-bg" />
+      <div ref={curtainRRef} className="absolute right-0 top-0 z-[20] h-full w-1/2 overflow-hidden bg-bg" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-bl from-red via-bg to-bg opacity-60" />
         <div className="absolute inset-y-0 left-0 w-px bg-red/70" />
-        <div className="absolute -bottom-16 -right-16 w-[420px] h-[420px] rounded-full bg-red/30 blur-[140px]" />
+        <div className="absolute -bottom-16 -right-16 h-[420px] w-[420px] rounded-full bg-red/30 blur-[140px]" />
       </div>
     </section>
   );
