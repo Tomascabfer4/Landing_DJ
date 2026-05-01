@@ -6,7 +6,6 @@ import Intro from './sections/Intro/Intro.jsx';
 import About from './sections/About.jsx';
 import DJVisuals from './sections/DJVisuals.jsx';
 import Sets from './sections/Sets.jsx';
-import Gallery from './sections/Gallery.jsx';
 import Contact from './sections/Contact.jsx';
 
 export default function App() {
@@ -14,17 +13,15 @@ export default function App() {
     <LenisProvider startLocked={true}>
       <Scanlines />
       <Cursor />
-      <main className="relative bg-bg text-fg">
+      <main className="relative text-fg">
         <Intro />
         <SectionCurtain label="01 / ABOUT" />
         <About />
-        <SectionCurtain label="02 / LIVE VISUALS" />
+        <SectionCurtain label="02 / LIVE" />
         <DJVisuals />
         <SectionCurtain label="03 / SETS" />
         <Sets />
-        <SectionCurtain label="04 / GALLERY" />
-        <Gallery />
-        <SectionCurtain label="05 / BOOKING" />
+        <SectionCurtain label="04 / BOOKING" />
         <Contact />
       </main>
     </LenisProvider>

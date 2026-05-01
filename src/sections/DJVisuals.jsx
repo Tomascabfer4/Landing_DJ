@@ -119,7 +119,7 @@ export default function DJVisuals() {
       style={{ height: '100vh' }}
     >
       <div className="absolute top-0 left-0 right-0 z-30 px-6 sm:px-12 pt-10 pointer-events-none">
-        <SectionHeader index="02" label="LIVE VISUALS" />
+        <SectionHeader index="02" label="LIVE" />
       </div>
 
       <div className="pointer-events-none absolute top-0 left-0 right-0 z-30 px-6 sm:px-12 pt-32">

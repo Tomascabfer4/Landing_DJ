@@ -29,7 +29,7 @@ export default function Sets() {
     >
       <div className="pointer-events-none absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-red/25 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-20 left-10 w-[300px] h-[300px] rounded-full bg-blood/30 blur-[100px]" />
-      <SectionHeader index="02" label="SETS" />
+      <SectionHeader index="03" label="SETS" />
       <div className="relative">
         {sets.map((s, i) => (
           <SetRow

@@ -14,13 +14,13 @@ export default function SetRow({ set, expanded, onToggle, index = 0 }) {
     if (!el) return;
     const st = ScrollTrigger.create({
       trigger: el,
-      start: 'top 90%',
+      start: 'top 88%',
       once: true,
       onEnter: () => gsap.from(el, {
-        x: -60,
+        y: 30,
         opacity: 0,
-        duration: 0.85,
-        ease: 'power3.out',
+        duration: 1.0,
+        ease: 'expo.out',
       }),
     });
     return () => st.kill();
