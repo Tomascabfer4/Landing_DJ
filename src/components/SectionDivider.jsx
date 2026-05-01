@@ -1,14 +1,14 @@
 import { useLayoutEffect, useRef } from 'react';
 import { revealOnEnter } from '../lib/reveal.js';
-import TextPressure from './TextPressure.jsx';
+import GraffitiPressure from './GraffitiPressure.jsx';
 
-export default function SectionDivider({ text, height = '32vh' }) {
+export default function SectionDivider({ text, height = '20vh' }) {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
     const st = revealOnEnter(ref.current, {
-      y: 24,
-      duration: 1.0,
+      y: 20,
+      duration: 0.95,
       start: 'top 92%',
     });
     return () => st?.kill();
@@ -21,21 +21,15 @@ export default function SectionDivider({ text, height = '32vh' }) {
       style={{ height }}
       aria-hidden="true"
     >
-      <span className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-fg/25" />
-      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-px bg-fg/25" />
+      <span className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-fg/25" />
+      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-px bg-fg/25" />
 
-      <div className="relative w-full max-w-[1100px]" style={{ height: 'clamp(110px, 18vh, 200px)' }}>
-        <TextPressure
+      <div className="relative w-full max-w-[640px]" style={{ height: 'clamp(56px, 8vh, 96px)' }}>
+        <GraffitiPressure
           text={text}
-          flex
-          alpha={false}
-          stroke={false}
-          width
-          weight
-          italic
-          textColor="#f5f5f7"
-          strokeColor="#ff2d2d"
-          minFontSize={42}
+          minFontSize={32}
+          maxScale={1.5}
+          minScale={0.9}
         />
       </div>
     </div>
