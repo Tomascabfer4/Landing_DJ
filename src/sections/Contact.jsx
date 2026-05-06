@@ -35,10 +35,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden px-6 py-24 sm:px-12 sm:py-28 lg:overflow-visible">
-      <div className="pointer-events-none absolute left-1/3 top-0 h-[500px] w-[500px] rounded-full bg-red/20 blur-[140px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-blood/30 blur-[120px]" />
-
+    <section id="contact" className="relative px-6 py-24 sm:px-12 sm:py-28">
       <div className="relative grid items-start gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
         <div className="flex flex-col gap-8">
           <h2 className="max-w-[7.5ch] font-display text-[clamp(2.8rem,8vw,8.5rem)] uppercase leading-[0.9] sm:max-w-[8.5ch]">
