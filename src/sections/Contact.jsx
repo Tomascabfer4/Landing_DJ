@@ -38,7 +38,7 @@ export default function Contact() {
     <section id="contact" className="relative px-6 py-24 sm:px-12 sm:py-28">
       <div className="relative grid items-start gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
         <div className="flex flex-col gap-8">
-          <h2 className="max-w-[7.5ch] font-display text-[clamp(2.8rem,8vw,8.5rem)] uppercase leading-[0.9] sm:max-w-[8.5ch]">
+          <h2 className="max-w-full font-display text-[clamp(2.4rem,7.2vw,8.5rem)] uppercase leading-[0.9] [word-break:break-word] sm:max-w-[8.5ch]">
             {HEADLINE.map((line, i) => {
               const colors = ['text-fg', 'bg-gradient-to-r from-red via-crimson to-blood bg-clip-text text-transparent', 'text-spark'];
               return <span key={i} className={`block ${colors[i % colors.length]}`}>{line}</span>;

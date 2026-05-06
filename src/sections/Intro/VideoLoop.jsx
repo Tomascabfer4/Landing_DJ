@@ -8,6 +8,18 @@ const SOURCES = [
   '/video/loop/v4.mp4',
 ];
 
+// Per-source object-position so portrait viewports keep the subject framed.
+// Tuned from a reference frame of each clip (subject sits left of centre on
+// most of them).
+const MOBILE_POSITIONS = ['50% 50%', '32% 50%', '36% 50%', '30% 50%'];
+const DESKTOP_POSITION = '50% 50%';
+
+const positionFor = (idx) => {
+  if (typeof window === 'undefined') return DESKTOP_POSITION;
+  const isMobile = window.matchMedia?.('(max-width: 767px)').matches ?? false;
+  return isMobile ? MOBILE_POSITIONS[idx] || DESKTOP_POSITION : DESKTOP_POSITION;
+};
+
 const STRIP_COUNT = 11;
 
 export default function VideoLoop({ active = true }) {
@@ -20,9 +32,27 @@ export default function VideoLoop({ active = true }) {
   const animatingRef = useRef(false);
   const reduceRef = useRef(false);
 
+  const mobileRef = useRef(false);
+
   useEffect(() => {
     reduceRef.current = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const mq = window.matchMedia?.('(max-width: 767px)');
+    mobileRef.current = mq?.matches ?? false;
+    const onChange = (e) => { mobileRef.current = e.matches; };
+    mq?.addEventListener?.('change', onChange);
+    return () => mq?.removeEventListener?.('change', onChange);
   }, []);
+
+  const playCrossfade = (fromEl, toEl) => new Promise((resolve) => {
+    if (!fromEl || !toEl) {
+      resolve();
+      return;
+    }
+    gsap.set(toEl, { autoAlpha: 0 });
+    const tl = gsap.timeline({ onComplete: resolve });
+    tl.to(toEl, { autoAlpha: 1, duration: 0.7, ease: 'power2.inOut' }, 0);
+    tl.to(fromEl, { autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' }, 0);
+  });
 
   useEffect(() => {
     if (!active) return;
@@ -39,9 +69,19 @@ export default function VideoLoop({ active = true }) {
     const a = aRef.current;
     if (!a) return;
     a.src = SOURCES[0];
+    a.style.objectPosition = positionFor(0);
     a.load();
     a.play().catch(() => {});
   }, [active]);
+
+  useEffect(() => {
+    const onResize = () => {
+      const el = slotRef.current === 'a' ? aRef.current : bRef.current;
+      if (el) el.style.objectPosition = positionFor(current);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [current]);
 
   const playTransition = ({ onCovered } = {}) => new Promise((resolve) => {
     const strips = stripsRef.current.filter(Boolean);
@@ -92,6 +132,7 @@ export default function VideoLoop({ active = true }) {
 
     if (toEl) {
       toEl.src = SOURCES[nextIdx];
+      toEl.style.objectPosition = positionFor(nextIdx);
       toEl.load();
       try {
         await toEl.play();
@@ -151,7 +192,7 @@ export default function VideoLoop({ active = true }) {
         playsInline
         preload="auto"
         aria-hidden
-        className="absolute inset-0 h-full w-full object-cover object-[58%_center] md:object-center"
+        className="absolute inset-0 h-full w-full object-cover object-center"
         style={{ opacity: 1 }}
       />
       <video
@@ -160,13 +201,13 @@ export default function VideoLoop({ active = true }) {
         playsInline
         preload="auto"
         aria-hidden
-        className="absolute inset-0 h-full w-full object-cover object-[58%_center] md:object-center"
+        className="absolute inset-0 h-full w-full object-cover object-center"
         style={{ opacity: 0 }}
       />
 
       <div
         ref={transitionRef}
-        className="pointer-events-none invisible absolute z-[10] hidden opacity-0 md:block"
+        className="pointer-events-none invisible absolute z-[10] opacity-0"
         style={{
           inset: '-60%',
           transform: 'rotate(-22deg)',
@@ -176,8 +217,8 @@ export default function VideoLoop({ active = true }) {
         {Array.from({ length: STRIP_COUNT }).map((_, i) => {
           const goesLeft = i % 2 === 0;
           const colors = goesLeft
-            ? 'bg-gradient-to-r from-blood via-crimson to-red'
-            : 'bg-gradient-to-l from-red via-crimson to-blood';
+            ? 'bg-gradient-to-r from-red via-red to-red'
+            : 'bg-gradient-to-l from-red via-red to-red';
           const text = goesLeft ? 'K1D' : 'T0M1';
           const word = `${text} / `.repeat(100).toUpperCase();
           return (

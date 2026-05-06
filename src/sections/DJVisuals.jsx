@@ -136,7 +136,7 @@ export default function DJVisuals() {
         ))}
       </div>
 
-      <div className="relative z-10 flex flex-col gap-12 px-5 pb-16 pt-24 sm:px-6 md:hidden">
+      <div className="relative z-10 flex flex-col gap-12 px-4 pb-16 pt-24 sm:px-6 md:hidden">
         {SLIDES.map((s, i) => (
           <MobileSlide key={s.id} slide={s} index={i} />
         ))}
@@ -208,25 +208,25 @@ function Slide({ slide, index }) {
 
 function MobileSlide({ slide, index }) {
   return (
-    <article className="relative overflow-hidden rounded-[28px] border border-fg/10 bg-bg/40 backdrop-blur-sm px-5 pb-6 pt-8">
+    <article className="relative w-full max-w-full overflow-hidden rounded-[28px] border border-fg/10 bg-bg/40 backdrop-blur-sm px-4 pb-6 pt-8 sm:px-5">
       <div
-        className="pointer-events-none absolute right-[-0.18em] top-3 select-none font-graffiti leading-none text-fg/[0.08]"
-        style={{ fontSize: 'clamp(7rem, 34vw, 10rem)' }}
+        className="pointer-events-none absolute right-3 top-24 select-none font-graffiti leading-none text-fg/[0.08]"
+        style={{ fontSize: 'clamp(4rem, 20vw, 7.5rem)' }}
       >
         {slide.id}
       </div>
 
       <div className="relative z-10 flex flex-col gap-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="font-graffiti text-[clamp(2.1rem,11vw,3.3rem)] leading-[0.9] text-spark">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="font-graffiti text-[clamp(1.9rem,9.5vw,3rem)] leading-[0.9] text-spark">
               {slide.tag}
             </p>
-            <p className="mt-2 font-body text-[11px] uppercase tracking-[0.38em] text-fg/65">
+            <p className="mt-2 font-body text-[10px] uppercase tracking-[0.32em] text-fg/65">
               {slide.city}
             </p>
           </div>
-          <div className="pt-2 text-right font-body text-[11px] uppercase tracking-[0.32em] text-fg/65">
+          <div className="shrink-0 pt-2 text-right font-body text-[10px] uppercase tracking-[0.22em] text-fg/65">
             <div><span className="text-red">{slide.bpm}</span> BPM</div>
             <div className="mt-1 text-spark">{slide.mood}</div>
           </div>
