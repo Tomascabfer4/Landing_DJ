@@ -82,9 +82,7 @@ export default function Intro() {
         style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)' }}
       />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[7] h-[22vh] bg-gradient-to-b from-transparent via-bg/30 to-bg/75" />
-      <div className="pointer-events-none absolute inset-x-0 -bottom-14 z-[8] h-32 bg-gradient-to-b from-transparent via-blood/24 to-transparent blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-0 -bottom-24 z-[9] h-40 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.26),transparent_72%)] blur-[52px]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[7] h-[28vh] bg-gradient-to-b from-transparent via-bg/55 to-bg" />
 
       {phase !== 'open' && (
         <div ref={stackRef} className="absolute inset-0 z-[30] flex flex-col items-center justify-center gap-6 px-6">

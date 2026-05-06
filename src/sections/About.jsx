@@ -35,10 +35,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className="relative overflow-hidden px-6 py-24 sm:px-12 sm:py-28 lg:overflow-visible">
-      <div className="pointer-events-none absolute -top-36 left-1/4 h-[560px] w-[560px] rounded-full bg-red/16 blur-[190px]" />
-      <div className="pointer-events-none absolute -bottom-20 -right-32 h-[620px] w-[620px] rounded-full bg-blood/24 blur-[200px]" />
-
+    <section id="about" className="relative px-6 py-24 sm:px-12 sm:py-28">
       <div className="relative grid items-center gap-12 lg:grid-cols-12">
         <div ref={photoWrapRef} className="relative flex justify-center lg:col-span-5">
           <div className="relative flex aspect-[3/4] w-full max-w-[320px] items-end justify-center sm:max-w-[400px] lg:max-w-[460px]">

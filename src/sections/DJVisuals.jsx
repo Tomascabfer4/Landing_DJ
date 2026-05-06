@@ -115,13 +115,8 @@ export default function DJVisuals() {
     <section
       ref={sectionRef}
       id="visuals"
-      className="relative overflow-hidden bg-gradient-to-b from-blood/14 via-bg to-bg md:h-screen"
+      className="relative overflow-hidden md:h-screen"
     >
-      <div className="pointer-events-none absolute inset-x-0 -top-16 z-[22] h-32 bg-gradient-to-b from-transparent via-blood/22 to-transparent blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-0 -top-28 z-[21] h-40 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.26),transparent_72%)] blur-[52px]" />
-      <div className="pointer-events-none absolute inset-x-0 -bottom-16 z-[22] h-32 bg-gradient-to-t from-transparent via-blood/20 to-transparent blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-0 -bottom-28 z-[21] h-40 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.24),transparent_72%)] blur-[52px]" />
-
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 px-6 pt-8 sm:px-12">
         <p className="font-body text-[10px] uppercase tracking-[0.45em] text-fg/50 sm:text-xs sm:tracking-[0.5em]">
           Scroll / Each frame is a moment on stage
@@ -129,14 +124,8 @@ export default function DJVisuals() {
       </div>
 
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,45,45,0.15),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(122,0,25,0.4),transparent_60%)]" />
-        <div className="absolute inset-x-0 -top-10 h-28 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.24),transparent_72%)] blur-3xl" />
-        <div className="absolute inset-x-0 -bottom-10 h-28 bg-[radial-gradient(ellipse_at_center,rgba(122,0,25,0.22),transparent_72%)] blur-3xl" />
-        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-blood/8 to-transparent md:h-14" />
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-blood/8 to-transparent md:h-14" />
         <div
-          className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
+          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
           style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)' }}
         />
       </div>
@@ -181,7 +170,7 @@ function Slide({ slide, index }) {
 
       <div className={`relative z-10 flex h-full w-full items-end gap-8 px-10 pb-24 pt-20 sm:px-20 ${flip ? 'flex-row-reverse' : ''}`}>
         <div className="relative flex h-full max-h-[74vh] items-end">
-          <div className="absolute -inset-8 bg-gradient-to-tr from-blood via-crimson to-red opacity-40 blur-3xl" />
+          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-blood via-crimson to-red opacity-25 blur-2xl" />
           <img
             data-photo
             src={slide.src}
@@ -219,8 +208,7 @@ function Slide({ slide, index }) {
 
 function MobileSlide({ slide, index }) {
   return (
-    <article className="relative overflow-hidden rounded-[28px] border border-fg/10 bg-gradient-to-br from-blood/20 via-bg/95 to-bg px-5 pb-6 pt-8">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-red/10 to-transparent" />
+    <article className="relative overflow-hidden rounded-[28px] border border-fg/10 bg-bg/40 backdrop-blur-sm px-5 pb-6 pt-8">
       <div
         className="pointer-events-none absolute right-[-0.18em] top-3 select-none font-graffiti leading-none text-fg/[0.08]"
         style={{ fontSize: 'clamp(7rem, 34vw, 10rem)' }}
@@ -245,7 +233,7 @@ function MobileSlide({ slide, index }) {
         </div>
 
         <div className="relative mx-auto flex h-[44vh] max-h-[460px] min-h-[280px] w-full items-end justify-center overflow-visible">
-          <div className="absolute inset-x-6 inset-y-10 rounded-full bg-gradient-to-tr from-blood via-crimson to-red opacity-55 blur-[70px]" />
+          <div className="absolute inset-x-10 inset-y-14 rounded-full bg-gradient-to-tr from-blood via-crimson to-red opacity-30 blur-[60px]" />
           <img
             src={slide.src}
             alt={`${slide.tag} - ${slide.city}`}
