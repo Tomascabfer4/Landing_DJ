@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npm run *)",
+      "Bash(git commit *)",
+      "Bash(npm test *)",
+      "Bash(npm i *)",
+      "Bash(npx playwright *)",
+      "Bash(node screenshot.mjs)",
+      "Bash(cp \"C:/Users/tomas/Documents/Codex/2026-05-05/files-mentioned-by-the-user-leonardo/public/tunnel-fullscreen.png\" public/images/tunnel.png && ls -la public/images/tunnel.png)",
+      "Bash(ls \"C:/Users/tomas/Documents/Codex/2026-05-05/files-mentioned-by-the-user-leonardo/\" 2>&1 | head -20)",
+      "Bash(find \"C:/Users/tomas/Pictures/Screenshots/\" -name \"*.png\" -newer \"C:/Users/tomas/Documents/Codex/2026-05-05/files-mentioned-by-the-user-leonardo/tunnel-fullscreen.png\" 2>/dev/null | head; ls \"C:/Users/tomas/Documents/Codex/\" 2>/dev/null)",
+      "Bash(ls -lt \"C:/Users/tomas/Documents/Codex/2026-05-05/\" | head -20; ls \"C:/Users/tomas/Downloads/\" | head -20)",
+      "Bash(cp \"C:/Users/tomas/Downloads/ChatGPT Image 6 may 2026, 10_06_05.png\" public/images/tunnel-mobile.png && ls -la public/images/tunnel-mobile.png)",
+      "Bash(cp /tmp/vidframes/*.jpg public/ && ls public/v*.jpg)"
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { gsap } from '../../lib/gsap.js';
+import { useLenis } from '../../lib/lenis.jsx';
+import { setIntroReady } from '../../lib/useIntroGate.js';
+import Counter from './Counter.jsx';
+import GraffitiBar from './GraffitiBar.jsx';
+import VideoLoop from './VideoLoop.jsx';
+
+export default function Intro() {
+  const [phase, setPhase] = useState('counting');
+  const [progress, setProgress] = useState(0);
+
+  const curtainLRef = useRef(null);
+  const curtainRRef = useRef(null);
+  const stackRef = useRef(null);
+
+  const { unlock } = useLenis();
+
+  const openInstantly = useCallback(() => {
+    gsap.set(stackRef.current, { opacity: 0, y: -20 });
+    gsap.set(curtainLRef.current, { xPercent: -101 });
+    gsap.set(curtainRRef.current, { xPercent: 101 });
+    setPhase('open');
+    setIntroReady(true);
+    unlock();
+  }, [unlock]);
+
+  useEffect(() => {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      setProgress(100);
+      openInstantly();
+    }
+  }, [openInstantly]);
+
+  const onCounterDone = () => {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      openInstantly();
+      return;
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setPhase('open');
+        setIntroReady(true);
+        unlock();
+      },
+    });
+
+    tl.to(stackRef.current, { opacity: 0, y: -20, duration: 0.4, ease: 'power2.in' });
+
+    tl.to(curtainLRef.current, {
+      xPercent: -101,
+      duration: 1.2,
+      ease: 'expo.inOut',
+    }, '-=0.15');
+
+    tl.to(curtainRRef.current, {
+      xPercent: 101,
+      duration: 1.2,
+      ease: 'expo.inOut',
+    }, '<');
+  };
+
+  return (
+    <section className="relative h-screen w-full overflow-hidden bg-bg">
+      <div className="absolute inset-0 z-[1]">
+        <VideoLoop active />
+      </div>
+
+      {phase !== 'open' && (
+        <div className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen">
+          <div className="absolute -left-32 -top-40 h-[640px] w-[640px] animate-pulse-slow rounded-full bg-red/25 blur-[160px]" />
+          <div className="absolute -right-32 top-1/3 h-[560px] w-[560px] animate-pulse-slow rounded-full bg-crimson/30 blur-[170px]" />
+          <div className="absolute bottom-0 left-1/3 h-[520px] w-[520px] rounded-full bg-blood/35 blur-[150px]" />
+        </div>
+      )}
+
+      <div
+        className="pointer-events-none absolute inset-0 z-[6] opacity-[0.07] mix-blend-overlay"
+        style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 4px)' }}
+      />
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[7] h-[28vh] bg-gradient-to-b from-transparent via-bg/55 to-bg" />
+
+      {phase !== 'open' && (
+        <div ref={stackRef} className="absolute inset-0 z-[30] flex flex-col items-center justify-center gap-6 px-6">
+          <img
+            src="/images/logo-mark.png"
+            alt="K1D TOM1"
+            className="h-auto w-[clamp(180px,28vw,360px)] drop-shadow-[0_0_30px_rgba(255,45,45,0.55)]"
+          />
+          <Counter
+            onComplete={onCounterDone}
+            onProgress={setProgress}
+            className="text-fg drop-shadow-[0_0_40px_rgba(255,45,45,0.55)]"
+          />
+          <GraffitiBar progress={progress} />
+        </div>
+      )}
+
+      <div ref={curtainLRef} className="absolute left-0 top-0 z-[20] h-full w-1/2 overflow-hidden bg-bg" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-br from-blood via-bg to-bg opacity-60" />
+        <div className="absolute inset-y-0 right-0 w-px bg-red/70" />
+        <div className="absolute -left-16 -top-16 h-[420px] w-[420px] rounded-full bg-crimson/30 blur-[140px]" />
+      </div>
+
+      <div ref={curtainRRef} className="absolute right-0 top-0 z-[20] h-full w-1/2 overflow-hidden bg-bg" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-bl from-red via-bg to-bg opacity-60" />
+        <div className="absolute inset-y-0 left-0 w-px bg-red/70" />
+        <div className="absolute -bottom-16 -right-16 h-[420px] w-[420px] rounded-full bg-red/30 blur-[140px]" />
+      </div>
+    </section>
+  );
+}
