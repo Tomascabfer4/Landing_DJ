@@ -143,6 +143,7 @@ export default function DJChat() {
   const introReady = useIntroGate();
   const [isMountedAfterIntro, setIsMountedAfterIntro] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldRenderModal, setShouldRenderModal] = useState(false);
   const [messages, setMessages] = useState(() => [createMessage('assistant', CHAT_COPY.intro)]);
   const [input, setInput] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState('');
@@ -156,6 +157,8 @@ export default function DJChat() {
   const context = useMemo(() => buildDjContext(), []);
   const whatsappUrl = useMemo(() => buildWhatsAppUrl(messages), [messages]);
   const emailUrl = useMemo(() => buildMailto(messages), [messages]);
+
+  const closeChat = () => setIsOpen(false);
 
   useEffect(() => {
     if (!introReady) {
@@ -187,8 +190,18 @@ export default function DJChat() {
   }, [isOpen, lock, unlock]);
 
   useEffect(() => {
+    if (isOpen) {
+      setShouldRenderModal(true);
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => setShouldRenderModal(false), 260);
+    return () => window.clearTimeout(timer);
+  }, [isOpen]);
+
+  useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setIsOpen(false);
+      if (event.key === 'Escape') closeChat();
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
@@ -268,9 +281,9 @@ export default function DJChat() {
         </a>
       </div>
 
-      {isOpen && (
-        <div className="dj-chat-shell" role="dialog" aria-modal="true">
-          <button className="dj-chat-backdrop" type="button" aria-label="Cerrar chat" onClick={() => setIsOpen(false)} />
+      {shouldRenderModal && (
+        <div className={`dj-chat-shell ${isOpen ? 'open' : 'closing'}`} role="dialog" aria-modal="true">
+          <button className="dj-chat-backdrop" type="button" aria-label="Cerrar chat" onClick={closeChat} />
           <section className="dj-chat-panel" data-cursor="hover">
             <header className="dj-chat-header">
               <div>
@@ -283,7 +296,7 @@ export default function DJChat() {
                 <a href={emailUrl}>Email</a>
                 <strong>{isChatAvailable ? CHAT_COPY.statusReady : CHAT_COPY.statusOffline}</strong>
               </div>
-              <button type="button" className="dj-chat-close" aria-label="Cerrar chat" onClick={() => setIsOpen(false)}>
+              <button type="button" className="dj-chat-close" aria-label="Cerrar chat" onClick={closeChat}>
                 <X size={20} />
               </button>
             </header>
