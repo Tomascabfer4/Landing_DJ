@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, ChevronDown, MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { useLenis } from '../lib/lenis.jsx';
+import { useIntroGate } from '../lib/useIntroGate.js';
 import { sets } from '../data/sets.js';
 import { socials } from '../data/socials.js';
 
@@ -139,6 +140,8 @@ function buildMailto(messages) {
 
 export default function DJChat() {
   const { lock, unlock } = useLenis();
+  const introReady = useIntroGate();
+  const [isMountedAfterIntro, setIsMountedAfterIntro] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(() => [createMessage('assistant', CHAT_COPY.intro)]);
   const [input, setInput] = useState('');
@@ -153,6 +156,17 @@ export default function DJChat() {
   const context = useMemo(() => buildDjContext(), []);
   const whatsappUrl = useMemo(() => buildWhatsAppUrl(messages), [messages]);
   const emailUrl = useMemo(() => buildMailto(messages), [messages]);
+
+  useEffect(() => {
+    if (!introReady) {
+      setIsOpen(false);
+      setIsMountedAfterIntro(false);
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => setIsMountedAfterIntro(true), 260);
+    return () => window.clearTimeout(timer);
+  }, [introReady]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -238,6 +252,8 @@ export default function DJChat() {
     sendMessage(prompt);
     window.setTimeout(() => setSelectedPrompt(''), 120);
   }
+
+  if (!introReady || !isMountedAfterIntro) return null;
 
   return (
     <>
